@@ -7,12 +7,13 @@ import './index.css';
 import { SupabaseProvider } from './contexts/SupabaseContext';
 
 const queryClient = new QueryClient();
+const basename = import.meta.env.PROD ? '/wedding' : '/';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <SupabaseProvider>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter basename="/">
+        <BrowserRouter basename={basename}>
           <App />
         </BrowserRouter>
       </QueryClientProvider>

@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCountdown } from '../hooks/useCountdown';
 import { Film, HeartHandshake, MessageSquare, Sparkles, MapPin, Camera, Gift, Clock3 } from 'lucide-react';
@@ -35,7 +37,17 @@ const faq = [
 ];
 
 function HomePage() {
+  const location = useLocation();
+  const guestName = useMemo(() => new URLSearchParams(location.search).get('to')?.trim() || '', [location.search]);
   const countdown = useCountdown(eventDate);
+
+  const heroLabel = guestName ? `Untuk tamu: ${guestName}` : 'Save the Date';
+  const heroTitle = guestName
+    ? `Selamat datang, ${guestName}`
+    : 'Join us to celebrate the wedding of Lucy Dwi Harseno and Windy Astuti.';
+  const heroText = guestName
+    ? `Kami dengan hormat mengundang ${guestName} untuk hadir merayakan hari bahagia kami.`
+    : 'Lucy Dwi Harseno, anak Bapak Suparno dan Ibu Harsih, dan Windy Astuti, anak Bapak Imm Rohimat dan Ibu Mintarsih.';
 
   return (
     <main>
@@ -43,12 +55,12 @@ function HomePage() {
         <div className="absolute inset-0 bg-hero-glass" />
         <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <p className="text-sm uppercase tracking-[0.32em] text-wedding-200">Save the Date</p>
+            <p className="text-sm uppercase tracking-[0.32em] text-wedding-200">{heroLabel}</p>
             <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              Join us for a modern luxury wedding celebration.
+              {heroTitle}
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300">
-              A curated experience with premium details, live music, and unforgettable moments for family and friends.
+              {heroText}
             </p>
             <div className="mt-10 grid gap-4 sm:max-w-lg sm:grid-cols-3">
               {heroFeatures.map((feature) => (
@@ -77,17 +89,17 @@ function HomePage() {
             </div>
           </SectionCard>
 
-          <SectionCard title="Bridge & Groom" icon={HeartHandshake}>
+          <SectionCard title="Bride & Bride" icon={HeartHandshake}>
             <div className="grid gap-6 sm:grid-cols-2">
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
                 <p className="text-sm uppercase tracking-[0.28em] text-wedding-200">Bride</p>
-                <h3 className="mt-4 text-xl font-semibold text-white">Ariana Moon</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-300">A creative soul with dreams of city skylines and soulful celebrations.</p>
+                <h3 className="mt-4 text-xl font-semibold text-white">Lucy Dwi Harseno</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-300">Anak Bapak Suparno dan Ibu Harsih.</p>
               </div>
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-                <p className="text-sm uppercase tracking-[0.28em] text-wedding-200">Groom</p>
-                <h3 className="mt-4 text-xl font-semibold text-white">Ethan Vale</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-300">A modern gentleman devoted to family, music, and timeless elegance.</p>
+                <p className="text-sm uppercase tracking-[0.28em] text-wedding-200">Bride</p>
+                <h3 className="mt-4 text-xl font-semibold text-white">Windy Astuti</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-300">Anak Bapak Imm Rohimat dan Ibu Mintarsih.</p>
               </div>
             </div>
           </SectionCard>
